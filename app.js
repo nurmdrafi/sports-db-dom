@@ -9,14 +9,20 @@
 */
 
 // Load Players API
-const loadPlayers = () => {
+const loadPlayers = async () => {
   const searchField = document.getElementById("search-box");
   const searchText = searchField.value;
   searchField.value = ""; // clear search input
   const url = `https://www.thesportsdb.com/api/v1/json/2/searchplayers.php?p=${searchText}`;
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => displayPlayers(data.player));
+  const res = await fetch(url);
+  const data = await res.json();
+  displayPlayers(data.player);
+  /* 
+    // Normal Fetch (without Async Await)
+    fetch(url)
+    .then(res => res.json())
+    .then(data => displayPlayers(data.player))
+ */
 };
 
 // Display Players Card
@@ -34,7 +40,7 @@ const displayPlayers = (players) => {
       strDescriptionEN,
     } = player;
     console.log(strThumb);
-    
+
     // Create New Element Based on Search Result
     const div = document.createElement("div");
     div.innerHTML = `
@@ -54,20 +60,19 @@ const displayPlayers = (players) => {
                     </div>
                 </div>
         `;
-        // Replace images if null
-        const images = document.getElementsByTagName('img');
-        for(const img of images){
-            const src = img.getAttribute('src');
-            if(src === "null" && strGender === "Male"){
-                img.src = "img/placeholder-male.jpg";
-            } else if(src === "null" && strGender === "Female"){
-                img.src = "img/placeholder-female.jpg"
-            }
-        }
-        
+    // Replace images if null
+    const images = document.getElementsByTagName("img");
+    for (const img of images) {
+      const src = img.getAttribute("src");
+      if (src === "null" && strGender === "Male") {
+        img.src = "img/placeholder-male.jpg";
+      } else if (src === "null" && strGender === "Female") {
+        img.src = "img/placeholder-female.jpg";
+      }
+    }
+
     playersContainer.appendChild(div);
   }
-  
 };
 
 // Load Player Details
