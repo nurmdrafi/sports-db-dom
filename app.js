@@ -25,8 +25,8 @@ const displayData = (players) =>{
                             <h4>${strNationality}</h4>
                             <h5>${strHeight}</h5>
                             <p class="card-text">${strDescriptionEN.slice(1, 200)}</p>
-                            <a href="#" class="btn btn-primary">Details</a>
-                        </div>
+                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</a>
+                        </div>       
                     </div>
                 </div>
         `
