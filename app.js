@@ -9,6 +9,8 @@ const loadPlayers = () => {
 };
 
 const displayPlayers = (players) => {
+    const playersContainer = document.getElementById("players-container");
+    playersContainer.textContent = "";
   for (const player of players) {
     const {
       idPlayer,
@@ -20,8 +22,7 @@ const displayPlayers = (players) => {
     } = player;
 
     // players container
-    const playersContainer = document.getElementById("players-container");
-
+    // const playersContainer = document.getElementById("players-container");
     const div = document.createElement("div");
     div.innerHTML = `
         <div class="col">
@@ -40,14 +41,13 @@ const displayPlayers = (players) => {
                     </div>
                 </div>
         `;
-    // playersContainer.innerHTML = "";
     playersContainer.appendChild(div);
+
   }
 };
 
+// Load Player Details
 const loadPlayerDetails = (idPlayer) => {
-    console.log(idPlayer);
-  // Player Details
   const playerDetailsUrl = `https://www.thesportsdb.com/api/v1/json/2/lookupplayer.php?id=${idPlayer}`;
   fetch(playerDetailsUrl)
     .then((res) => res.json())
@@ -55,8 +55,7 @@ const loadPlayerDetails = (idPlayer) => {
     .then((data) => showPlayerDetails(data.players[0]));
 };
 
-// Show Details
-
+// Show Player Details
 const showPlayerDetails = (data) => {
   const details = document.getElementById("details");
   const playerDetails = document.createElement("div");
@@ -66,3 +65,10 @@ const showPlayerDetails = (data) => {
 `;
   details.appendChild(playerDetails);
 };
+
+// Clear Player Details
+
+const clearPlayerDetails = () =>{
+    const details = document.getElementById("details");
+    details.textContent = "";
+}
