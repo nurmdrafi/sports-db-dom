@@ -7,6 +7,8 @@
     >>> <button onclick="function('${id}')"></button> [id must be string][follow quotation syntax] ✔
 5. img.src == "null" replaced ❌
 6. full length data not showing on display [working...][✔ text-ellipsis][❌ slice()]
+7. display result count ✔
+    >>> need to handle when count 0
 */
 
 // Load Players API
@@ -31,8 +33,13 @@
 // Display Players Card
 const displayPlayers = (players) => {
   const playersContainer = document.getElementById("players-container");
-  playersContainer.textContent = ""; // clear previous result
-  console.log(players, players.length);
+  playersContainer.textContent = ""; // clear previous content
+  const result = document.getElementById('result-count');
+  result.textContent = ""; // clear previous result count
+  const resultDiv =  document.createElement('div');
+  resultDiv.innerHTML = `<p class="text-center">${players.length} result found.</p>`;
+  result.appendChild(resultDiv);
+
   for (const player of players) {
     const {
       idPlayer,

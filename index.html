@@ -15,6 +15,7 @@
 
 <body>
     <main class="container">
+        <!-- Input Field -->
         <div class="input-group my-5 w-50 m-auto">
             <input id="search-box" type="text" class="form-control" placeholder="Search" aria-label="Search"
                 aria-describedby="basic-addon2">
@@ -22,7 +23,13 @@
                 <span class="input-group-text" id="search-btn" role="button" onclick="loadPlayers()">Search</span>
             </div>
         </div>
-        <!-- Players Card -->
+
+        <!-- Search Result Count -->
+        <div id="result-count">
+            
+        </div>
+
+
         <!-- Modal -->
         <div class="modal fade" id="player-details" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -40,8 +47,10 @@
                 </div>
             </div>
         </div>
+
+        <!-- Players Container -->
         <div id="players-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <!-- Players list -->
+            <!-- Players Card -->
         </div>
 
     </main>
