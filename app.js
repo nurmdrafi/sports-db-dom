@@ -1,41 +1,44 @@
 /* 
 // Important
-1. For checking purpose use html value="something" attribute
-2. Clear input value >>> input.value = "";
-3. Clear previous HTML content >>> parentElement.textContent = "";
+1. For checking purpose use html value="something" attribute ✔
+2. Clear input value >>> input.value = ""; ✔
+3. Clear previous HTML content >>> parentElement.textContent = ""; ✔
 4. Get id of each result from fetch data and pass to new fetch url where get data by id 
-    >>> <button onclick="function('${id}')"></button> [id must be string][follow quotation syntax]
-5. img.src == "null" replaced
+    >>> <button onclick="function('${id}')"></button> [id must be string][follow quotation syntax] ✔
+5. img.src == "null" replaced ❌
+6. full length data not showing on display [working...][✔ text-ellipsis][❌ slice()]
 */
 
 // Load Players API
-const loadPlayers = async () => {
-  const searchField = document.getElementById("search-box");
-  const searchText = searchField.value;
-  searchField.value = ""; // clear search input
-  const url = `https://www.thesportsdb.com/api/v1/json/2/searchplayers.php?p=${searchText}`;
-  const res = await fetch(url);
-  const data = await res.json();
-  displayPlayers(data.player);
-  /* 
-    // Normal Fetch (without Async Await)
-    fetch(url)
-    .then(res => res.json())
-    .then(data => displayPlayers(data.player))
- */
-};
+
+  const loadPlayers = () => {
+    const searchField = document.getElementById("search-box");
+    const searchText = searchField.value;
+    searchField.value = ""; // clear search input
+    const url = `https://www.thesportsdb.com/api/v1/json/2/searchplayers.php?p=${searchText}`;
+
+    /* const res = await fetch(url);
+    const data = await res.json();
+    displayPlayers(data.player); */
+    
+      // Normal Fetch (without Async Await)
+          fetch(url)
+          .then(res => res.json())
+          .then(data => displayPlayers(data.player))
+          .catch(error => console.log(error))
+  };
 
 // Display Players Card
 const displayPlayers = (players) => {
   const playersContainer = document.getElementById("players-container");
   playersContainer.textContent = ""; // clear previous result
+  console.log(players, players.length);
   for (const player of players) {
     const {
       idPlayer,
       strPlayer,
       strGender,
       strNationality,
-      strHeight,
       strThumb,
       strDescriptionEN,
     } = player;
@@ -50,11 +53,8 @@ const displayPlayers = (players) => {
                         <div class="card-body text-center">
                             <h3 class="card-title">Name: ${strPlayer}</h3>
                             <h4>Country: ${strNationality}</h4>
-                            <h5>${strHeight}</h5>
-                            <p class="card-text">${strDescriptionEN.slice(
-                              1,
-                              200
-                            )}</p>
+                            <h5>${strGender}</h5>
+                            <p class="card-text text-ellipsis">${strDescriptionEN}</p>
                             <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#player-details"  onclick="loadPlayerDetails('${idPlayer}')">Details</a>
                         </div>       
                     </div>
