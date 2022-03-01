@@ -56,28 +56,19 @@ const displayPlayers = (players) => {
   playersContainer.textContent = ""; // clear previous content
   
   for (const player of players) {
-    const {
-      idPlayer,
-      strPlayer,
-      strGender,
-      strNationality,
-      strThumb,
-      strDescriptionEN,
-    } = player;
-    console.log(strThumb);
-
+    
     // Create New Element Based on Search Result
     const div = document.createElement("div");
     div.innerHTML = `
         <div class="col">
                     <div class="card h-100">
-                        <img src="${strThumb}" class="card-img-top w-50 mx-auto" alt="...">
+                        <img src="${player.strThumb ? player.strThumb : player.strCutout}" class="card-img-top w-50 mx-auto" alt="...">
                         <div class="card-body text-center">
-                            <h3 class="card-title">Name: ${strPlayer}</h3>
-                            <h4>Country: ${strNationality}</h4>
-                            <h5>${strGender}</h5>
-                            <p class="card-text text-ellipsis">${strDescriptionEN}</p>
-                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#player-details"  onclick="loadPlayerDetails('${idPlayer}')">Details</a>
+                            <h3 class="card-title">Name: ${player.strPlayer}</h3>
+                            <h4>Country: ${player.strNationality}</h4>
+                            <h5>${player.strGender}</h5>
+                            <p class="card-text text-ellipsis">${player.strDescriptionEN}</p>
+                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#player-details"  onclick="loadPlayerDetails('${player.idPlayer}')">Details</a>
                         </div>       
                     </div>
                 </div>
@@ -86,9 +77,9 @@ const displayPlayers = (players) => {
     const images = document.getElementsByTagName("img");
     for (const img of images) {
       const src = img.getAttribute("src");
-      if (src === "null" && strGender === "Male") {
+      if (src === "null" && player.strGender === "Male") {
         img.src = "img/placeholder-male.jpg";
-      } else if (src === "null" && strGender === "Female") {
+      } else if (src === "null" && player.strGender === "Female") {
         img.src = "img/placeholder-female.jpg";
       }
     }
