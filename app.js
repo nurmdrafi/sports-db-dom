@@ -1,53 +1,60 @@
 /* 
-// Important
-1. For checking purpose use html value="something" attribute ✔
+\\ Important Notes //
+1. For checking purpose use html value="something" attribute ✔ [optional]
 2. Clear input value >>> input.value = ""; ✔
 3. Clear previous HTML content >>> parentElement.textContent = ""; ✔
 4. Get id of each result from fetch data and pass to new fetch url where get data by id 
     >>> <button onclick="function('${id}')"></button> [id must be string][follow quotation syntax] ✔
-5. img.src == "null" replaced ❌
+5. img.src == "null" replaced ✔ [few null images are not replaced]
 6. full length data not showing on display [working...][✔ text-ellipsis][❌ slice()]
-7. display result count ✔
-    >>> need to handle when count 0    
+7. handle spinner, search result, when passing data after fetch ✔
+    >>> if result == null
+        >>> spinner.style.display = "block";
+            resultBody.style.display = "block";
+            result.innerText = 'No';
+8. use visibility hidden playersContainer ✔ [❌ display: block (break layout)]
 */
 
-// Load Players API
+// Global Variables
+const playersContainer = document.getElementById("players-container");
+const resultBody = document.getElementById('result-body');
+const result = document.getElementById("result-count");
 
-  const loadPlayers = () => {
-    const searchField = document.getElementById("search-box");
-    const searchText = searchField.value;
-    searchField.value = ""; // clear search input
-    document.getElementById('spinner').style.display = "block";
-    const url = `https://www.thesportsdb.com/api/v1/json/2/searchplayers.php?p=${searchText}`;
+// Load Players Data from API
+const loadPlayers = () => {
+  const searchField = document.getElementById("search-box");
+  const searchText = searchField.value;
+  searchField.value = ""; // clear search input
+  const spinner = document.getElementById("spinner");
 
-    /* const res = await fetch(url);
-    const data = await res.json();
-    displayPlayers(data.player); */
-    
-      // Normal Fetch (without Async Await)
-          fetch(url)
-          .then(res => res.json())
-          .then(data => displayPlayers(data.player))
-          .catch(error => console.log(error))
-  };
+  // initial display visibility
+  spinner.style.display = "block";
+  playersContainer.style.visibility = "hidden";
+  resultBody.style.display = "none";
+
+  const url = `https://www.thesportsdb.com/api/v1/json/2/searchplayers.php?p=${searchText}`;
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.player === null) {
+        spinner.style.display = "block";
+        resultBody.style.display = "block";
+        result.innerText = 'No';
+      } else {
+        spinner.style.display = "none";
+        playersContainer.style.visibility = "visible";
+        displayPlayers(data.player);
+        resultBody.style.display = "block";
+        result.innerText = `${data.player.length}`
+      }
+    })
+    .catch((error) => console.log(error));
+};
 
 // Display Players Card
 const displayPlayers = (players) => {
-  if(players){
-    document.getElementById('spinner').style.display = "none";
-    
-  } else{
-    document.getElementById('spinner').style.display = "block";
-  }
-
-  const playersContainer = document.getElementById("players-container");
   playersContainer.textContent = ""; // clear previous content
-  const result = document.getElementById('result-count');
-  result.textContent = ""; // clear previous result count
-  const resultDiv =  document.createElement('div');
-  resultDiv.innerHTML = `<p class="text-center">${players.length} result found.</p>`;
-  result.appendChild(resultDiv);
-
+  
   for (const player of players) {
     const {
       idPlayer,
@@ -110,7 +117,7 @@ const showPlayerDetails = (info) => {
   details.appendChild(playerDetails);
 };
 
-// Clear Player Details
+// Clear Button Player Details
 const clearPlayerDetails = () => {
   const details = document.getElementById("details");
   details.textContent = "";
