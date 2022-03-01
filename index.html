@@ -15,7 +15,7 @@
 
 <body>
     <main class="container">
-        <!-- Input Field -->
+        <!-- Search Box -->
         <div class="input-group my-5 w-50 m-auto">
             <input id="search-box" type="text" class="form-control" placeholder="Search" aria-label="Search"
                 aria-describedby="basic-addon2">
@@ -24,25 +24,33 @@
             </div>
         </div>
 
+        <!-- Loading... -->
+        <div id="spinner">
+                <img class="w-50 mx-auto d-block img-fluid" src="img/loading.gif" alt="">
+        </div>
+
         <!-- Search Result Count -->
         <div id="result-count">
-            
+
         </div>
 
 
         <!-- Modal -->
-        <div class="modal fade" id="player-details" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="player-details" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button onclick="clearPlayerDetails()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button onclick="clearPlayerDetails()" type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
                     <div id="details" class="modal-body">
-                        
+
                     </div>
                     <div class="modal-footer">
-                        <button onclick="clearPlayerDetails()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button onclick="clearPlayerDetails()" type="button" class="btn btn-danger"
+                            data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

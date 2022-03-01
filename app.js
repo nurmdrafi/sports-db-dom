@@ -8,7 +8,7 @@
 5. img.src == "null" replaced ❌
 6. full length data not showing on display [working...][✔ text-ellipsis][❌ slice()]
 7. display result count ✔
-    >>> need to handle when count 0
+    >>> need to handle when count 0    
 */
 
 // Load Players API
@@ -17,6 +17,7 @@
     const searchField = document.getElementById("search-box");
     const searchText = searchField.value;
     searchField.value = ""; // clear search input
+    document.getElementById('spinner').style.display = "block";
     const url = `https://www.thesportsdb.com/api/v1/json/2/searchplayers.php?p=${searchText}`;
 
     /* const res = await fetch(url);
@@ -32,6 +33,13 @@
 
 // Display Players Card
 const displayPlayers = (players) => {
+  if(players){
+    document.getElementById('spinner').style.display = "none";
+    
+  } else{
+    document.getElementById('spinner').style.display = "block";
+  }
+
   const playersContainer = document.getElementById("players-container");
   playersContainer.textContent = ""; // clear previous content
   const result = document.getElementById('result-count');
@@ -77,7 +85,6 @@ const displayPlayers = (players) => {
         img.src = "img/placeholder-female.jpg";
       }
     }
-
     playersContainer.appendChild(div);
   }
 };
